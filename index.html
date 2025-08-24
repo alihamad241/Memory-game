@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+</head>
+<body>
+
+<div class="game-container">
+        <div class="header">
+            <h1>Memory Game</h1>
+            <div class="game-info">
+                <div class="info-box">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer-display" class="timer-display">5:00</span>
+                </div>
+                <div class="info-box">
+                    <span id="moves-counter" class="moves-counter">0 Moves</span>
+                </div>
+                <button id="reset-button" class="reset-button">
+                    <i class="fas fa-redo-alt"></i> Reset
+                </button>
+            </div>
+        </div>
+        <div id="game-grid"></div>
+    </div>
+
+    <!-- Game over/Score Modal -->
+    <div id="score-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-score"></p>
+            <div id="modal-rating" class="stars"></div>
+            <button class="restart-button" onclick="window.location.reload()">Play Again</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

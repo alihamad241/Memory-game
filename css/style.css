@@ -1,0 +1,286 @@
+:root {
+    --card-back-color: #4A90E2;
+    --card-front-color: #fff;
+    --card-border-color: #357ABD;
+    --background-color: #F0F4F8;
+    --text-color: #333;
+    --header-bg: #E2E8F0;
+    --star-color: #FFD700;
+    --modal-bg: rgba(0, 0, 0, 0.7);
+    --modal-content-bg: #fff;
+    --button-color: #4A90E2;
+    --button-hover-color: #357ABD;
+    --font-family: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    width: 100%;
+    background-color: var(--modal-content-bg);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--header-bg);
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin: 0;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.game-info {
+    display: flex;
+    gap: 20px;
+}
+
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.timer-display, .moves-counter {
+    background-color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* New styling for the reset button */
+.reset-button {
+    background-color: var(--card-back-color);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.reset-button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+.reset-button:active {
+    transform: translateY(0);
+}
+
+#game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 600px;
+}
+
+.card {
+    background-color: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.card-back {
+    background-color: var(--card-back-color);
+    border: 2px solid var(--card-border-color);
+    transform: rotateY(0deg);
+    color: var(--card-front-color);
+}
+
+.card-front {
+    background-color: var(--card-front-color);
+    transform: rotateY(180deg);
+    color: var(--card-back-color);
+    border: 2px solid var(--card-border-color);
+}
+
+.card.is-flipped .card-inner,
+.card.matched .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card.matched .card-back, .card.matched .card-front {
+    border: 2px solid #28a745;
+}
+
+.card.matched {
+    cursor: default;
+}
+
+.card.matched .card-front i {
+    animation: match-animation 0.5s ease-in-out;
+}
+
+@keyframes match-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Modal styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.modal.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--modal-content-bg);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.modal-content p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.stars {
+    font-size: 2.5rem;
+    color: var(--star-color);
+    margin: 15px 0;
+}
+
+.restart-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 20px;
+}
+
+.restart-button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+.restart-button:active {
+    transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .info-box {
+        font-size: 1rem;
+    }
+
+    #game-grid {
+        gap: 8px;
+    }
+
+    .card {
+        font-size: 2rem;
+    }
+
+    .modal-content {
+        padding: 25px;
+    }
+}
